@@ -50,18 +50,20 @@ const Home = () => {
         transition={{ duration: 0.6, delay: 0.6 }}
         className="relative w-full max-w-[800px] mx-auto mb-6 md:mb-8 px-2 md:px-0"
       >
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={currentImageIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            src={images[currentImageIndex]}
-            alt="Slideshow"
-            className="w-full h-auto object-contain rounded-lg shadow-md absolute left-0 right-0"
-          />
-        </AnimatePresence>
+        <div className="aspect-w-16 aspect-h-9">
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentImageIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+              src={images[currentImageIndex]}
+              alt="Slideshow"
+              className="w-full h-[400px] object-contain rounded-lg"
+            />
+          </AnimatePresence>
+        </div>
       </motion.div>
     </motion.div>
   );
