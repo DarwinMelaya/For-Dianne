@@ -1,42 +1,90 @@
 import React, { useState } from "react";
 
+// Move data to separate constants
+const CATEGORIES = [
+  { id: "love", label: "Love", color: "pink" },
+  { id: "health", label: "Health", color: "green" },
+  { id: "career", label: "Career", color: "blue" },
+  { id: "me", label: "Me", color: "purple" },
+];
+
+const COLOR_MAP = {
+  pink: {
+    active: "bg-pink-500 text-white",
+    inactive: "border-2 border-pink-500 text-pink-500 hover:bg-pink-50",
+    text: "text-pink-500",
+  },
+  green: {
+    active: "bg-green-500 text-white",
+    inactive: "border-2 border-green-500 text-green-500 hover:bg-green-50",
+    text: "text-green-500",
+  },
+  blue: {
+    active: "bg-blue-500 text-white",
+    inactive: "border-2 border-blue-500 text-blue-500 hover:bg-blue-50",
+    text: "text-blue-500",
+  },
+  purple: {
+    active: "bg-purple-500 text-white",
+    inactive: "border-2 border-purple-500 text-purple-500 hover:bg-purple-50",
+    text: "text-purple-500",
+  },
+};
+
+// Split into smaller components
+const CategoryButton = ({ category, isActive, onClick }) => (
+  <button
+    className={`relative px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 font-medium text-lg
+      ${isActive ? COLOR_MAP[category.color].active : "bg-white"}
+      before:absolute before:inset-0 before:border-2 before:border-${
+        category.color
+      }-500 
+      before:rounded-full before:content-[''] before:translate-x-0.5 before:translate-y-0.5
+      after:absolute after:inset-0 after:border-2 after:border-${
+        category.color
+      }-500 
+      after:rounded-full after:content-[''] after:-translate-x-0.5 after:-translate-y-0.5
+      ${!isActive ? `text-${category.color}-500` : ""}`}
+    onClick={onClick}
+  >
+    {category.label}
+  </button>
+);
+
+const MessageCard = ({ message, isActive, categoryData }) => {
+  const colorClasses = COLOR_MAP[categoryData.color];
+
+  return (
+    <div
+      className={`relative rounded-2xl transform transition-all duration-300 hover:scale-105 overflow-hidden
+        ${isActive ? "opacity-100" : "opacity-80 hover:opacity-100"}
+        before:absolute before:inset-0 before:border-2 before:border-${
+          categoryData.color
+        }-400 
+        before:rounded-2xl before:content-[''] before:translate-x-1 before:translate-y-1
+        after:absolute after:inset-0 after:border-2 after:border-${
+          categoryData.color
+        }-400 
+        after:rounded-2xl after:content-[''] after:-translate-x-1 after:-translate-y-1`}
+    >
+      <div
+        className={`relative p-6 bg-white border-2 border-${categoryData.color}-400 rounded-2xl`}
+      >
+        <p className="text-gray-700 leading-relaxed text-lg font-medium">
+          "{message.content}"
+        </p>
+        <div className="mt-4 flex justify-end items-center">
+          <span className={`${colorClasses.text} font-semibold`}>
+            {categoryData.label}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Letters = () => {
-  // Add state for active category
   const [activeCategory, setActiveCategory] = useState(null);
-
-  const categories = [
-    { id: "love", label: "Love", color: "pink" },
-    { id: "health", label: "Health", color: "green" },
-    { id: "career", label: "Career", color: "blue" },
-    { id: "me", label: "Me", color: "purple" },
-  ];
-
-  // Helper function to get color classes
-  const getColorClasses = (category) => {
-    const colorMap = {
-      pink: {
-        active: "bg-pink-500 text-white",
-        inactive: "bg-pink-100 text-pink-600 hover:bg-pink-200",
-        text: "text-pink-500",
-      },
-      green: {
-        active: "bg-green-500 text-white",
-        inactive: "bg-green-100 text-green-600 hover:bg-green-200",
-        text: "text-green-500",
-      },
-      blue: {
-        active: "bg-blue-500 text-white",
-        inactive: "bg-blue-100 text-blue-600 hover:bg-blue-200",
-        text: "text-blue-500",
-      },
-      purple: {
-        active: "bg-purple-500 text-white",
-        inactive: "bg-purple-100 text-purple-600 hover:bg-purple-200",
-        text: "text-purple-500",
-      },
-    };
-    return colorMap[category];
-  };
 
   // Add messages array with sample data
   const messages = [
@@ -184,72 +232,39 @@ const Letters = () => {
     },
   ];
 
-  // Filter messages based on active category
   const filteredMessages = activeCategory
     ? messages.filter((message) => message.category === activeCategory)
     : messages;
 
+  const toggleCategory = (categoryId) => {
+    setActiveCategory(activeCategory === categoryId ? null : categoryId);
+  };
+
   return (
     <div className="container mx-auto px-4 py-6 relative z-10 mt-[100px]">
-      {/* Category Buttons */}
       <div className="flex flex-wrap gap-4 mb-12 justify-center">
-        {categories.map((category) => (
-          <button
+        {CATEGORIES.map((category) => (
+          <CategoryButton
             key={category.id}
-            className={`px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 font-medium text-lg shadow-md
-              ${
-                activeCategory === category.id
-                  ? getColorClasses(category.color).active
-                  : getColorClasses(category.color).inactive
-              }`}
-            onClick={() =>
-              setActiveCategory(
-                activeCategory === category.id ? null : category.id
-              )
-            }
-          >
-            {category.label}
-          </button>
+            category={category}
+            isActive={activeCategory === category.id}
+            onClick={() => toggleCategory(category.id)}
+          />
         ))}
       </div>
 
-      {/* Messages Container */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredMessages.map((message) => {
-          const categoryColor = categories.find(
+          const categoryData = CATEGORIES.find(
             (cat) => cat.id === message.category
-          )?.color;
-          const colorClasses = getColorClasses(categoryColor);
-
+          );
           return (
-            <div
+            <MessageCard
               key={message.id}
-              className={`rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 overflow-hidden
-                ${
-                  activeCategory
-                    ? "opacity-100"
-                    : "opacity-80 hover:opacity-100"
-                }
-                border-2 ${
-                  message.category === activeCategory
-                    ? `border-${categoryColor}-400`
-                    : "border-transparent"
-                }`}
-            >
-              <div className={`p-6 ${colorClasses.inactive} bg-opacity-30`}>
-                <p className="text-gray-700 leading-relaxed text-lg font-medium">
-                  "{message.content}"
-                </p>
-                <div className="mt-4 flex justify-end items-center">
-                  <span className={`${colorClasses.text} font-semibold`}>
-                    {
-                      categories.find((cat) => cat.id === message.category)
-                        ?.label
-                    }
-                  </span>
-                </div>
-              </div>
-            </div>
+              message={message}
+              isActive={message.category === activeCategory}
+              categoryData={categoryData}
+            />
           );
         })}
       </div>
