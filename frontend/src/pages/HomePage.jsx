@@ -1,5 +1,6 @@
 import Home from "../Layouts/Home";
 import Letters from "../Layouts/Letters";
+import Music from "../Layouts/Music";
 import Navbar from "../Layouts/Navbar";
 
 const HomePage = () => {
@@ -8,6 +9,7 @@ const HomePage = () => {
       <Navbar />
       <Home />
       <Letters />
+      <Music />
     </div>
   );
 };

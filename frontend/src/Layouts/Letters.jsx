@@ -242,6 +242,15 @@ const Letters = () => {
 
   return (
     <div className="container mx-auto px-4 py-6 relative z-10 mt-[100px]">
+      <div className="text-center mb-8">
+        <h1 className="text-4xl font-bold text-gray-800 mb-3">
+          Letters for You
+        </h1>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          Click a category to read your messages.
+        </p>
+      </div>
+
       <div className="flex flex-wrap gap-4 mb-12 justify-center">
         {CATEGORIES.map((category) => (
           <CategoryButton
