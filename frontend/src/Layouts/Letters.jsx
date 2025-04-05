@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Move data to separate constants
 const CATEGORIES = [
@@ -33,8 +34,10 @@ const COLOR_MAP = {
 
 // Split into smaller components
 const CategoryButton = ({ category, isActive, onClick }) => (
-  <button
-    className={`relative px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 font-medium text-lg
+  <motion.button
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    className={`relative px-8 py-3 rounded-full transition-all duration-300 font-medium text-lg
       ${isActive ? COLOR_MAP[category.color].active : "bg-white"}
       before:absolute before:inset-0 before:border-2 before:border-${
         category.color
@@ -48,15 +51,20 @@ const CategoryButton = ({ category, isActive, onClick }) => (
     onClick={onClick}
   >
     {category.label}
-  </button>
+  </motion.button>
 );
 
 const MessageCard = ({ message, isActive, categoryData }) => {
   const colorClasses = COLOR_MAP[categoryData.color];
 
   return (
-    <div
-      className={`relative rounded-2xl transform transition-all duration-300 hover:scale-105 overflow-hidden
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className={`relative rounded-2xl overflow-hidden
         ${isActive ? "opacity-100" : "opacity-80 hover:opacity-100"}
         before:absolute before:inset-0 before:border-2 before:border-${
           categoryData.color
@@ -79,7 +87,7 @@ const MessageCard = ({ message, isActive, categoryData }) => {
           </span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -241,15 +249,23 @@ const Letters = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6 relative z-10 mt-[100px]">
-      <div className="text-center mb-8">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="container mx-auto px-4 py-6 relative z-10 mt-[100px]"
+    >
+      <motion.div
+        initial={{ y: -20 }}
+        animate={{ y: 0 }}
+        className="text-center mb-8"
+      >
         <h1 className="text-4xl font-bold text-gray-800 mb-3">
           Letters for You
         </h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
           Click a category to read your messages.
         </p>
-      </div>
+      </motion.div>
 
       <div className="flex flex-wrap gap-4 mb-12 justify-center">
         {CATEGORIES.map((category) => (
@@ -262,22 +278,24 @@ const Letters = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredMessages.map((message) => {
-          const categoryData = CATEGORIES.find(
-            (cat) => cat.id === message.category
-          );
-          return (
-            <MessageCard
-              key={message.id}
-              message={message}
-              isActive={message.category === activeCategory}
-              categoryData={categoryData}
-            />
-          );
-        })}
-      </div>
-    </div>
+      <AnimatePresence mode="popLayout">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredMessages.map((message) => {
+            const categoryData = CATEGORIES.find(
+              (cat) => cat.id === message.category
+            );
+            return (
+              <MessageCard
+                key={message.id}
+                message={message}
+                isActive={message.category === activeCategory}
+                categoryData={categoryData}
+              />
+            );
+          })}
+        </div>
+      </AnimatePresence>
+    </motion.div>
   );
 };
 

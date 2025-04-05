@@ -8,7 +8,6 @@ const Music = () => {
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.3 }}
-        whileHover={{ scale: 1.02 }}
       >
         {/* Image Container */}
         <motion.div className="p-4" whileTap={{ scale: 0.98 }}>
