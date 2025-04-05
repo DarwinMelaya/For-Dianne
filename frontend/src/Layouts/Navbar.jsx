@@ -16,7 +16,7 @@ const Navbar = () => {
         FOR DIANNE
       </motion.a>
       <div className="flex flex-wrap gap-4 md:gap-8 justify-center">
-        {["Home", "Letter", "Music", "For You"].map((item, index) => (
+        {["Home", "Letter", "Music", "Toy", "For You"].map((item, index) => (
           <motion.a
             key={item}
             initial={{ opacity: 0, y: 20 }}
