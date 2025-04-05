@@ -32,7 +32,7 @@ const App = () => {
                 Click anywhere
               </h1>
               <p className="font-serif text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-amber-200 font-bold tracking-wide animate-pulse">
-                Dianne 🎵
+                Dianne 🤍
               </p>
               <div className="mt-4 sm:mt-6">
                 <span className="inline-block w-20 sm:w-24 md:w-32 h-0.5 bg-amber-200/40"></span>

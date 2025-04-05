@@ -60,10 +60,17 @@ const MessageCard = ({ message, isActive, categoryData }) => {
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.3 }}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        transition: {
+          type: "spring",
+          bounce: 0.4,
+          duration: 0.8,
+        },
+      }}
+      viewport={{ once: true, margin: "-50px" }}
       className={`relative rounded-2xl overflow-hidden
         ${isActive ? "opacity-100" : "opacity-80 hover:opacity-100"}
         before:absolute before:inset-0 before:border-2 before:border-${
@@ -255,8 +262,9 @@ const Letters = () => {
       className="container mx-auto px-4 py-6 relative z-10 mt-[100px]"
     >
       <motion.div
-        initial={{ y: -20 }}
-        animate={{ y: 0 }}
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
         className="text-center mb-8"
       >
         <h1 className="text-4xl font-bold text-gray-800 mb-3">
@@ -267,7 +275,12 @@ const Letters = () => {
         </p>
       </motion.div>
 
-      <div className="flex flex-wrap gap-4 mb-12 justify-center">
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="flex flex-wrap gap-4 mb-12 justify-center"
+      >
         {CATEGORIES.map((category) => (
           <CategoryButton
             key={category.id}
@@ -276,7 +289,7 @@ const Letters = () => {
             onClick={() => toggleCategory(category.id)}
           />
         ))}
-      </div>
+      </motion.div>
 
       <AnimatePresence mode="popLayout">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
