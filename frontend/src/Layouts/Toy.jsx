@@ -6,7 +6,7 @@ const Toy = () => {
           You as a POP TOY
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-          {[1, 2, 3, 4].map((num) => (
+          {[1, 2, 3].map((num) => (
             <div
               key={num}
               className="bg-gradient-to-b from-amber-950/90 to-amber-900/80 rounded-xl shadow-black shadow-lg p-6"

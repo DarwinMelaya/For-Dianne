@@ -6,6 +6,13 @@ const App = () => {
   const audioRef = useRef(null);
   const [showOverlay, setShowOverlay] = useState(true);
 
+  // Check if current date is after or equal to April 19, 2025
+  const isValidDate = () => {
+    const targetDate = new Date("2025-04-19T00:00:00");
+    const currentDate = new Date();
+    return currentDate >= targetDate;
+  };
+
   const startAudio = () => {
     if (audioRef.current) {
       audioRef.current.volume = 1.0;
@@ -18,6 +25,25 @@ const App = () => {
         .catch((error) => console.error("Audio playback failed:", error));
     }
   };
+
+  // If date is not valid, show restriction message
+  if (!isValidDate()) {
+    return (
+      <div className="fixed inset-0 bg-black flex items-center justify-center">
+        <div className="text-center p-8">
+          <h1 className="font-serif text-3xl sm:text-4xl text-amber-200 mb-4">
+            Not Yet Available
+          </h1>
+          <p className="font-serif text-xl text-amber-100">
+            Bawal mo pa buksan Dianne HAHAHA pwede mo lang buksan sa
+          </p>
+          <p className="font-serif text-2xl text-amber-200 font-bold mt-2">
+            April 19, 2025
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Router>
