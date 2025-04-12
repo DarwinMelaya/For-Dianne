@@ -29,17 +29,20 @@ const App = () => {
   // If date is not valid, show restriction message
   if (!isValidDate()) {
     return (
-      <div className="fixed inset-0 bg-black flex items-center justify-center">
-        <div className="text-center p-8">
-          <h1 className="font-serif text-3xl sm:text-4xl text-amber-200 mb-4">
-            Not Yet Available
+      <div className="fixed inset-0 bg-[#f5e6d3] flex items-center justify-center">
+        <div className="text-center p-8 bg-[#fff8f0] rounded-2xl shadow-lg border-4 border-[#8b4513] max-w-md mx-4">
+          <div className="text-[#2c1810] text-6xl mb-4">🥺</div>
+          <h1 className="font-serif text-3xl sm:text-4xl text-[#2c1810] mb-4">
+            Oopsie! Not Yet Available~
           </h1>
-          <p className="font-serif text-xl text-amber-100">
-            Bawal mo pa buksan Dianne HAHAHA pwede mo lang buksan sa
+          <p className="font-serif text-xl text-[#5c2c1d]">
+            Sorry Dianne! Di mo pa pwede yan buksan HAHAHAHA, pwede mo lang
+            buksan yan sa
           </p>
-          <p className="font-serif text-2xl text-amber-200 font-bold mt-2">
+          <p className="font-serif text-2xl text-[#2c1810] font-bold mt-4 mb-2">
             April 19, 2025
           </p>
+          <div className="text-[#5c2c1d] text-sm mt-4">*Sorryyyy po* 🤗</div>
         </div>
       </div>
     );
