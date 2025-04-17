@@ -47,7 +47,7 @@ const Letter = () => {
         Open Letter
       </motion.button>
 
-      <div className="relative w-full max-w-md">
+      {/* <div className="relative w-full max-w-md">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -90,7 +90,7 @@ const Letter = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </div> */}
 
       {/* Modal */}
       <AnimatePresence>
